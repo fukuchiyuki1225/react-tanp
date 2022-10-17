@@ -20,7 +20,6 @@ const Item = (props) => {
     const cookies = Cookies.get();
     let i = 0;
     for (const key of Object.keys(cookies)) {
-      console.log(key);
       if (key.includes("favorite")) {
         if (Cookies.get(key) === item.itemCode) {
           Cookies.remove(key);
@@ -32,7 +31,6 @@ const Item = (props) => {
     }
     Cookies.set(`favorite${i}`, item.itemCode);
     setIsFavorite(true);
-    console.log(Cookies.get());
   };
 
   return (
