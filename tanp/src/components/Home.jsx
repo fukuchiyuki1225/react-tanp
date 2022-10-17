@@ -12,6 +12,7 @@ const Home = () => {
   const [newMore, setNewMore] = useState(false);
   const [isItemPage, setIsItemPage] = useState(false);
   const [itemInfo, setItemInfo] = useState();
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     fetch(rankingUrl)
@@ -60,6 +61,7 @@ const Home = () => {
               <ItemList
                 setIsItemPage={setIsItemPage}
                 setItemInfo={setItemInfo}
+                setScrollY={setScrollY}
                 items={rankingMore ? rankingItems : rankingItems.slice(0, 6)}
                 key="Ranking"
               ></ItemList>
@@ -82,6 +84,7 @@ const Home = () => {
               <ItemList
                 setIsItemPage={setIsItemPage}
                 setItemInfo={setItemInfo}
+                setScrollY={setScrollY}
                 items={newMore ? newItems : newItems.slice(0, 6)}
                 key="New"
               ></ItemList>
@@ -91,7 +94,11 @@ const Home = () => {
       );
     } else {
       return (
-        <Item setIsItemPage={setIsItemPage} itemInfo={itemInfo.Item}></Item>
+        <Item
+          setIsItemPage={setIsItemPage}
+          itemInfo={itemInfo.Item}
+          scrollY={scrollY}
+        ></Item>
       );
     }
   }

@@ -24,6 +24,7 @@ const Item = (props) => {
       <button
         onClick={() => {
           props.setIsItemPage(false);
+          window.scrollTo(0, props.scrollY);
         }}
         type="button"
         className="back-button"

@@ -5,11 +5,13 @@ const ItemList = (props) => {
     <ul className="item-list-container">
       {props.items.map((item) => {
         return (
-          <li key={item.Item.itemName} className="list-item">
+          <li key={item.Item.itemCode} className="list-item">
             <button
               onClick={() => {
                 props.setIsItemPage(true);
                 props.setItemInfo(item);
+                props.setScrollY(window.scrollY);
+                window.scrollTo(0, 0);
               }}
               className="list-item-link"
               type="button"
