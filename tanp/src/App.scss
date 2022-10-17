@@ -409,7 +409,7 @@ body {
 
 .menu {
   width: 100%;
-  padding: 20px 37.5px 30px;
+  padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -419,8 +419,10 @@ body {
 }
 
 .menu-icon {
+  content: "";
   width: 28px;
   height: 24px;
+  background-size: contain;
 }
 
 .menu-text {
@@ -432,6 +434,55 @@ body {
 .menu-text-active {
   @extend .menu-text;
   color: #2c2c2c;
+}
+
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+  font-weight: $medium;
+  color: #b4b4b4;
+  &.menu-active {
+    color: #2c2c2c;
+  }
+  &--home {
+    @extend .menu-button;
+    &::before {
+      @extend .menu-icon;
+      background-image: url("./img/icon_home.svg");
+    }
+    &.menu-active {
+      &::before {
+        background-image: url("./img/icon_home-active.svg");
+      }
+    }
+  }
+  &--favorite {
+    @extend .menu-button;
+    &::before {
+      @extend .menu-icon;
+      background-image: url("./img/icon_favorite.svg");
+    }
+    &.menu-active {
+      &::before {
+        background-image: url("./img/icon_favorite-active.svg");
+      }
+    }
+  }
+  &--ranking {
+    @extend .menu-button;
+    &::before {
+      @extend .menu-icon;
+      background-image: url("./img/icon_ranking.svg");
+    }
+    &.menu-active {
+      &::before {
+        background-image: url("./img/icon_ranking-active.svg");
+      }
+    }
+  }
 }
 
 .back-button {
