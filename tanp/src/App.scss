@@ -557,29 +557,39 @@ body {
 
 .add-favorite-button {
   margin-top: 20px;
-  display: flex;
   width: 100%;
   height: 57px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  color: #b4b4b4;
-  border-radius: 4px;
+  gap: 8px;
   box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.16);
-  span {
+  border-radius: 4px;
+  &::before {
+    content: "";
+    width: 18px;
+    height: 16px;
+    background-image: url("./img/icon_favorite-button.svg");
+    background-size: contain;
     display: block;
-    padding-left: 25px;
-    position: relative;
+    transform: translateY(2px);
+  }
+  &::after {
+    content: "お気に入りに追加する";
+    font-size: 1.6rem;
+    font-weight: $medium;
+    color: #b4b4b4;
+  }
+  &--active {
+    @extend .add-favorite-button;
+    background-color: #d66f6f;
     &::before {
-      content: "";
-      width: 18px;
-      height: 16px;
-      background-image: url("./img/icon_favorite-button.svg");
-      background-size: contain;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-40%);
+      background-image: url("./img/icon_favorite-button-active.svg");
+    }
+    &::after {
+      content: "お気に入りに追加済み";
+      font-weight: $medium;
+      color: #fff;
     }
   }
 }

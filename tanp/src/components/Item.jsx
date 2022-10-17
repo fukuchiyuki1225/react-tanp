@@ -70,9 +70,7 @@ const Item = (props) => {
               }}
               className="add-favorite-button"
               type="button"
-            >
-              <span>お気に入りに追加する</span>
-            </button>
+            ></button>
             <h4 className="item-heading">商品詳細</h4>
             <p className="item-caption">{item.itemCaption}</p>
           </div>
