@@ -26,7 +26,6 @@ const Home = () => {
     fetch(newUrl)
       .then((res) => res.json())
       .then((jsonRes) => {
-        console.log(jsonRes);
         setNewItems(jsonRes.Items);
       });
   }, []);
