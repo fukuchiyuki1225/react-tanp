@@ -579,7 +579,7 @@ body {
     font-weight: $medium;
     color: #b4b4b4;
   }
-  &--active {
+  &.favorite-button-active {
     @extend .add-favorite-button;
     background-color: #d66f6f;
     &::before {

@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
 const Item = (props) => {
-  console.log(props.itemInfo);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // console.log(props.itemInfo);
   const item = props.itemInfo;
+
+  useEffect(() => {
+    const cookies = Cookies.get();
+    for (const key of Object.keys(cookies)) {
+      if (Cookies.get(key) === item.itemCode) {
+        setIsFavorite(true);
+      }
+    }
+  }, []);
 
   const onClickFavorite = () => {
     const cookies = Cookies.get();
-    console.log(cookies);
     let i = 0;
     for (const key of Object.keys(cookies)) {
       console.log(key);
-      if (key === `favorite${i}`) {
-        if (Cookies.get(`favorite${i}`) === item.itemCode) break;
+      if (key.includes("favorite")) {
+        if (Cookies.get(key) === item.itemCode) {
+          Cookies.remove(key);
+          setIsFavorite(false);
+          return;
+        }
         i++;
       }
     }
     Cookies.set(`favorite${i}`, item.itemCode);
+    setIsFavorite(true);
+    console.log(Cookies.get());
   };
 
   return (
@@ -68,7 +84,11 @@ const Item = (props) => {
               onClick={() => {
                 onClickFavorite();
               }}
-              className="add-favorite-button"
+              className={
+                isFavorite
+                  ? "add-favorite-button favorite-button-active"
+                  : "add-favorite-button"
+              }
               type="button"
             ></button>
             <h4 className="item-heading">商品詳細</h4>
