@@ -1,11 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Header = (props) => {
+const Header = () => {
   return (
     <h1 className="header">
-      <button onClick={() => props.setCurrentPage("ホーム")} type="button">
-        TANP
-      </button>
+      <Link to="/">TANP</Link>
     </h1>
   );
 };
