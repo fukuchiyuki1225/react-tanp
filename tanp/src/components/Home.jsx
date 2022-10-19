@@ -40,7 +40,6 @@ const Home = () => {
   };
 
   if (rankingItems.length !== 0 && newItems.length !== 0) {
-    console.log(rankingItems);
     if (!isItemPage) {
       return (
         <div className="contents">

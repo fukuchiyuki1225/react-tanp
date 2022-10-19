@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 const Item = (props) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // console.log(props.itemInfo);
   const item = props.itemInfo;
 
   useEffect(() => {
@@ -39,6 +38,9 @@ const Item = (props) => {
         onClick={() => {
           props.setIsItemPage(false);
           window.scrollTo(0, props.scrollY);
+          if (typeof props.getFavoriteItems !== "undefined") {
+            props.getFavoriteItems();
+          }
         }}
         type="button"
         className="back-button"

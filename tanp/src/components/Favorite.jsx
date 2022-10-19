@@ -14,9 +14,13 @@ const Favorite = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    getFavoriteItems();
+  }, []);
+
+  const getFavoriteItems = () => {
     let url = "";
-    const cookies = Cookies.get();
     let items = [];
+    const cookies = Cookies.get();
     for (const key of Object.keys(cookies)) {
       if (key.includes("favorite")) {
         url = frontUrl + Cookies.get(key).replace(":", "%3A") + endUrl;
@@ -25,14 +29,15 @@ const Favorite = () => {
           .then((jsonRes) => {
             items.push(jsonRes.Items[0]);
             setFavoriteItems(items.slice(0, items.length)); // 新しい配列として渡す（Stateが変更されたことにならないため）
-            console.log(key);
           });
       }
     }
-  }, []);
+    if (items.length === 0) {
+      setFavoriteItems([]);
+    }
+  };
 
   if (favoriteItems.length !== 0) {
-    console.log(favoriteItems.length);
     if (!isItemPage) {
       return (
         <div className="contents">
@@ -58,9 +63,25 @@ const Favorite = () => {
           setIsItemPage={setIsItemPage}
           itemInfo={itemInfo.Item}
           scrollY={scrollY}
+          getFavoriteItems={getFavoriteItems}
         ></Item>
       );
     }
+  } else {
+    return (
+      <div className="contents">
+        <div className="list-container">
+          <div className="inner">
+            <div className="list-heading-container">
+              <h2 className="list-heading">お気に入り一覧</h2>
+            </div>
+            <p className="message-no-favorite">
+              商品をお気に入りに登録してみましょう。
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 };
 

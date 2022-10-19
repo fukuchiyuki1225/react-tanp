@@ -1,7 +1,6 @@
 import React from "react";
 
 const ItemList = (props) => {
-  console.log(props.items);
   return (
     <ul className="item-list-container">
       {props.items.map((item) => {

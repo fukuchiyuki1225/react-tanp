@@ -325,6 +325,7 @@ body {
 }
 
 .contents {
+  min-height: 100vh;
   padding: 78px 0 102px;
   background-color: #fafafa;
   &--item {
@@ -591,4 +592,10 @@ body {
       color: #fff;
     }
   }
+}
+
+.message-no-favorite {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
 }
