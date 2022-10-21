@@ -29,14 +29,14 @@ const Layout = (props) => {
             お気に入り
           </NavLink>
           <NavLink
-            to="ranking"
+            to="search"
             className={({ isActive }) =>
               isActive
-                ? "menu-button--ranking menu-active"
-                : "menu-button--ranking"
+                ? "menu-button--search menu-active"
+                : "menu-button--search"
             }
           >
-            ランキング
+            検索
           </NavLink>
         </ul>
       </nav>

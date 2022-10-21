@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "../App.scss";
 import Home from "./Home";
 import Favorite from "./Favorite";
-import Ranking from "./Ranking";
+import Search from "./Search";
 import Layout from "./Layout";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<Layout></Layout>}>
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/favorite" element={<Favorite></Favorite>}></Route>
-          <Route path="/ranking" element={<Ranking></Ranking>}></Route>
+          <Route path="/search" element={<Search></Search>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

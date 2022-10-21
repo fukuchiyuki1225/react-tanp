@@ -409,9 +409,9 @@ body {
 
 .menu {
   width: 100%;
-  padding: 20px 30px;
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -471,15 +471,15 @@ body {
       }
     }
   }
-  &--ranking {
+  &--search {
     @extend .menu-button;
     &::before {
       @extend .menu-icon;
-      background-image: url("./img/icon_ranking.svg");
+      background-image: url("./img/icon_search.svg");
     }
     &.menu-active {
       &::before {
-        background-image: url("./img/icon_ranking-active.svg");
+        background-image: url("./img/icon_search-active.svg");
       }
     }
   }
