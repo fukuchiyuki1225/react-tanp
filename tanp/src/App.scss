@@ -311,6 +311,10 @@ body {
   color: #2c2c2c;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 .header {
   padding: 20px 0;
   text-align: center;
@@ -606,7 +610,7 @@ body {
 }
 
 .search {
-  margin-top: -8px;
+  margin: -8px 0 8px;
   width: 100%;
   height: 66px;
   background-color: #fff;
