@@ -12,29 +12,36 @@ const Favorite = () => {
   const [isItemPage, setIsItemPage] = useState(false);
   const [itemInfo, setItemInfo] = useState();
   const [scrollY, setScrollY] = useState(0);
+  let items = [];
+  let isLoading = true;
 
   useEffect(() => {
     getFavoriteItems();
   }, []);
 
-  const getFavoriteItems = () => {
+  const fetchFavoriteItems = (url, i) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        fetch(url)
+          .then((res) => res.json())
+          .then((jsonRes) => {
+            items = [...items, jsonRes.Items[0]]; // 新しい配列として渡す（Stateが変更されたことにならないため）
+            resolve();
+          });
+      }, 300);
+    });
+  };
+
+  const getFavoriteItems = async () => {
     let url = "";
-    let items = [];
     const cookies = Cookies.get();
     for (const key of Object.keys(cookies)) {
       if (key.includes("favorite")) {
         url = frontUrl + Cookies.get(key).replace(":", "%3A") + endUrl;
-        fetch(url)
-          .then((res) => res.json())
-          .then((jsonRes) => {
-            items.push(jsonRes.Items[0]);
-            setFavoriteItems(items.slice(0, items.length)); // 新しい配列として渡す（Stateが変更されたことにならないため）
-          });
+        await fetchFavoriteItems(url, parseInt(key.replace("favorite", "")));
       }
     }
-    if (items.length === 0) {
-      setFavoriteItems([]);
-    }
+    setFavoriteItems(items);
   };
 
   if (favoriteItems.length !== 0) {
@@ -76,7 +83,9 @@ const Favorite = () => {
               <h2 className="list-heading">お気に入り一覧</h2>
             </div>
             <p className="message-no-favorite">
-              商品をお気に入りに登録してみましょう。
+              {isLoading
+                ? "お気に入り商品を取得中..."
+                : "商品をお気に入りに登録してみましょう。"}
             </p>
           </div>
         </div>
