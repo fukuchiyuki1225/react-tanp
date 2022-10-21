@@ -27,7 +27,6 @@ const Item = (props) => {
         }
         let index = parseInt(key.replace("favorite", ""));
         max = max <= index ? index : max;
-        console.log(max);
       }
     }
     Cookies.set(`favorite${max + 1}`, item.itemCode);

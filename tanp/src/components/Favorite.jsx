@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import ItemList from "./ItemList";
 import Item from "./Item";
@@ -12,8 +12,8 @@ const Favorite = () => {
   const [isItemPage, setIsItemPage] = useState(false);
   const [itemInfo, setItemInfo] = useState();
   const [scrollY, setScrollY] = useState(0);
+  const isLoading = useRef(true);
   let items = [];
-  let isLoading = true;
 
   useEffect(() => {
     getFavoriteItems();
@@ -35,16 +35,18 @@ const Favorite = () => {
   const getFavoriteItems = async () => {
     let url = "";
     const cookies = Cookies.get();
+    isLoading.current = true;
     for (const key of Object.keys(cookies)) {
       if (key.includes("favorite")) {
         url = frontUrl + Cookies.get(key).replace(":", "%3A") + endUrl;
         await fetchFavoriteItems(url, parseInt(key.replace("favorite", "")));
       }
     }
+    isLoading.current = false;
     setFavoriteItems(items);
   };
 
-  if (favoriteItems.length !== 0) {
+  if (!isLoading.current) {
     if (!isItemPage) {
       return (
         <div className="contents">
@@ -82,8 +84,8 @@ const Favorite = () => {
             <div className="list-heading-container">
               <h2 className="list-heading">お気に入り一覧</h2>
             </div>
-            <p className="message-no-favorite">
-              {isLoading
+            <p className="message-no-item">
+              {isLoading.current
                 ? "お気に入り商品を取得中..."
                 : "商品をお気に入りに登録してみましょう。"}
             </p>
