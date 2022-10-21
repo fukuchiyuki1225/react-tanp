@@ -17,7 +17,7 @@ const Item = (props) => {
 
   const onClickFavorite = () => {
     const cookies = Cookies.get();
-    let i = 0;
+    let max = -1;
     for (const key of Object.keys(cookies)) {
       if (key.includes("favorite")) {
         if (Cookies.get(key) === item.itemCode) {
@@ -25,10 +25,12 @@ const Item = (props) => {
           setIsFavorite(false);
           return;
         }
-        i++;
+        let index = parseInt(key.replace("favorite", ""));
+        max = max <= index ? index : max;
+        console.log(max);
       }
     }
-    Cookies.set(`favorite${i}`, item.itemCode);
+    Cookies.set(`favorite${max + 1}`, item.itemCode);
     setIsFavorite(true);
   };
 
