@@ -69,7 +69,7 @@ const Home = () => {
           <div className="list-container">
             <div className="inner">
               <div className="list-heading-container">
-                <h2 className="list-heading">新着商品</h2>
+                <h2 className="list-heading">新着アイテム</h2>
                 {!newMore && (
                   <button
                     onClick={(e) => onClickMore(e, "new")}

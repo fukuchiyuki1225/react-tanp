@@ -86,8 +86,8 @@ const Favorite = () => {
             </div>
             <p className="message-no-item">
               {isLoading.current
-                ? "お気に入り商品を取得中..."
-                : "商品をお気に入りに登録してみましょう。"}
+                ? "お気に入りアイテムを取得中..."
+                : "アイテムをお気に入りに登録してみましょう。"}
             </p>
           </div>
         </div>

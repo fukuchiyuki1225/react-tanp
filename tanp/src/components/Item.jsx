@@ -92,7 +92,7 @@ const Item = (props) => {
               }
               type="button"
             ></button>
-            <h4 className="item-heading">商品詳細</h4>
+            <h4 className="item-heading">アイテム詳細</h4>
             <p className="item-caption">{item.itemCaption}</p>
           </div>
         </div>

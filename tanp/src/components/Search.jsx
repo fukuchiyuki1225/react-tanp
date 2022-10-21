@@ -47,13 +47,17 @@ const Search = () => {
             <div className="list-heading-container">
               <h2 className="list-heading">検索結果</h2>
             </div>
-            <ItemList
-              setIsItemPage={setIsItemPage}
-              setItemInfo={setItemInfo}
-              setScrollY={setScrollY}
-              items={searchItems}
-              key="Search"
-            ></ItemList>
+            {searchItems.length !== 0 ? (
+              <ItemList
+                setIsItemPage={setIsItemPage}
+                setItemInfo={setItemInfo}
+                setScrollY={setScrollY}
+                items={searchItems}
+                key="Search"
+              ></ItemList>
+            ) : (
+              <p className="message-no-item">アイテムを検索しましょう。</p>
+            )}
           </div>
         </div>
       </div>
