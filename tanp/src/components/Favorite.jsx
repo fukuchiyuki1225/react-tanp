@@ -46,7 +46,7 @@ const Favorite = () => {
     setFavoriteItems(items);
   };
 
-  if (!isLoading.current) {
+  if (favoriteItems.length !== 0 && !isLoading.current) {
     if (!isItemPage) {
       return (
         <div className="contents">
