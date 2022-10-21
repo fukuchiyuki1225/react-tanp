@@ -12,6 +12,7 @@ const Search = () => {
   const [itemInfo, setItemInfo] = useState();
   const [scrollY, setScrollY] = useState(0);
   const [keyword, setKeyWord] = useState("");
+  const [showCategory, setShowCategory] = useState(false);
 
   const search = (e) => {
     let url = "";
@@ -40,7 +41,14 @@ const Search = () => {
               value={keyword}
             />
           </div>
-          <button type="button" className="search-category"></button>
+          <button
+            type="button"
+            className="search-category"
+            onClick={() => {
+              console.log(!showCategory);
+              setShowCategory(!showCategory);
+            }}
+          ></button>
         </div>
         <div className="list-container">
           <div className="inner">
