@@ -1,6 +1,39 @@
 import React, { useState } from "react";
 import ItemList from "./ItemList";
 import Item from "./Item";
+import ladiesImg from "../img/icon_ladies.svg";
+import mensImg from "../img/icon_mens.svg";
+import innerImg from "../img/icon_inner.svg";
+import bagImg from "../img/icon_bag.svg";
+import shoesImg from "../img/icon_shoes.svg";
+import watchImg from "../img/icon_watch.svg";
+import accessoryImg from "../img/icon_accessory.svg";
+import kidsImg from "../img/icon_kids.svg";
+import toyImg from "../img/icon_toy.svg";
+import outdoorImg from "../img/icon_outdoor.svg";
+import appliancesImg from "../img/icon_appliances.svg";
+import tvImg from "../img/icon_tv.svg";
+import pcImg from "../img/icon_pc.svg";
+import spImg from "../img/icon_sp.svg";
+import foodImg from "../img/icon_food.svg";
+import sweetsImg from "../img/icon_sweets.svg";
+import drinkImg from "../img/icon_drink.svg";
+import interiorImg from "../img/icon_interior.svg";
+import dailyImg from "../img/icon_daily.svg";
+import kitchenImg from "../img/icon_kitchen.svg";
+import booksImg from "../img/icon_books.svg";
+import cddvdImg from "../img/icon_cddvd.svg";
+import gameImg from "../img/icon_game.svg";
+import hobbyImg from "../img/icon_hobby.svg";
+import instrumentImg from "../img/icon_instrument.svg";
+import carsuppliesImg from "../img/icon_carsupplies.svg";
+import cosmeImg from "../img/icon_cosme.svg";
+import healthImg from "../img/icon_health.svg";
+import medicalImg from "../img/icon_medical.svg";
+import petImg from "../img/icon_pet.svg";
+import diyImg from "../img/icon_diy.svg";
+import renovationImg from "../img/icon_renovation.svg";
+import catalogImg from "../img/icon_catalog.svg";
 
 const frontUrl =
   "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706?format=json&keyword=%E3%82%B5%E3%83%B3%E3%83%AA%E3%82%AA";
@@ -90,12 +123,57 @@ const genreId = {
   // gift: "100000",
 };
 
+const genreImg = {
+  ladies: ladiesImg,
+  mens: mensImg,
+  inner: innerImg,
+  bag: bagImg,
+  shoes: shoesImg,
+  watch: watchImg,
+  accessory: accessoryImg,
+  kids: kidsImg,
+  toy: toyImg,
+  outdoor: outdoorImg,
+  appliances: appliancesImg,
+  tv: tvImg,
+  pc: pcImg,
+  sp: spImg,
+  // data: dataImg,
+  food: foodImg,
+  sweets: sweetsImg,
+  drink: drinkImg,
+  // beer: beerImg,
+  // shochu: shochuImg,
+  interior: interiorImg,
+  daily: dailyImg,
+  kitchen: kitchenImg,
+  books: booksImg,
+  cddvd: cddvdImg,
+  game: gameImg,
+  hobby: hobbyImg,
+  instrument: instrumentImg,
+  // car: carImg,
+  carsupplies: carsuppliesImg,
+  cosme: cosmeImg,
+  health: healthImg,
+  medical: medicalImg,
+  pet: petImg,
+  diy: diyImg,
+  renovation: renovationImg,
+  // home: homeImg,
+  catalog: catalogImg,
+  // gift: giftImg,
+};
+
 const Search = () => {
   const [searchItems, setSearchItems] = useState([]);
   const [isItemPage, setIsItemPage] = useState(false);
   const [itemInfo, setItemInfo] = useState();
   const [scrollY, setScrollY] = useState(0);
   const [keyword, setKeyWord] = useState("");
+  const [category, setCategory] = useState("all");
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
   const [showSearchSetting, setShowSearchSetting] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
 
@@ -103,8 +181,12 @@ const Search = () => {
     if (type === "key") {
       if (e.key !== "Enter" || keyword === "") return;
     }
+    if (checkPrice() < 0) return;
     let url = "";
-    url = frontUrl + "%20" + encodeURIComponent(keyword) + endUrl;
+    let categoryStr = category === "all" ? "" : `&genreId=${genreId[category]}`;
+    url = `${frontUrl}"%20"${encodeURIComponent(
+      keyword
+    )}${categoryStr}${endUrl}`;
     fetch(url)
       .then((res) => res.json())
       .then((jsonRes) => {
@@ -116,22 +198,47 @@ const Search = () => {
     let list = [];
     for (const key of Object.keys(genreId)) {
       list.push(
-        <li className="modal-list-item" id={genreId[key]}>
+        <li className="modal-list-item" id={genreId[key]} key={key}>
           <div className="modal-list-inner inner">
-            <button type="button" className="modal-list-button">
+            <img src={genreImg[key]} alt={key} className="category-icon" />
+            <button
+              type="button"
+              className={
+                category === key
+                  ? "modal-list-button--selected"
+                  : "modal-list-button"
+              }
+              onClick={() => {
+                setCategory(key);
+              }}
+            >
               {genreName[key]}
             </button>
           </div>
         </li>
       );
     }
-    console.log(list);
     return list;
   };
 
   const closeSearchSetting = () => {
-    setShowSearchSetting(false);
     setShowCategory(false);
+    setShowSearchSetting(false);
+  };
+
+  const clearSearchSetting = () => {
+    setCategory("all");
+    setMinPrice(0);
+    setMaxPrice(0);
+  };
+
+  const checkPrice = () => {
+    if (minPrice < 0 || maxPrice < 0) {
+      return -1;
+    } else if (maxPrice <= minPrice && minPrice > 0 && maxPrice > 0) {
+      return -2;
+    }
+    return 0;
   };
 
   if (!isItemPage) {
@@ -172,7 +279,11 @@ const Search = () => {
                   key="Search"
                 ></ItemList>
               ) : (
-                <p className="message-no-item">アイテムを検索しましょう。</p>
+                <p className="message-no-item">
+                  {checkPrice() === 0
+                    ? `アイテムを検索しましょう。`
+                    : `絞り込み条件を確認してください。`}
+                </p>
               )}
             </div>
           </div>
@@ -181,19 +292,41 @@ const Search = () => {
           <div className="modal-wrapper">
             <div className="modal-container">
               <div className="modal-header inner">
+                {!showCategory ? (
+                  <button
+                    type="button"
+                    className="modal-close"
+                    onClick={() => {
+                      closeSearchSetting();
+                    }}
+                  ></button>
+                ) : (
+                  <button
+                    type="button"
+                    className="modal-back"
+                    onClick={() => {
+                      setShowCategory(false);
+                    }}
+                  ></button>
+                )}
+                <h3 className="modal-header-text">検索の絞り込み</h3>
                 <button
                   type="button"
-                  className="modal-close"
+                  className="modal-clear"
                   onClick={() => {
-                    closeSearchSetting();
+                    clearSearchSetting();
                   }}
-                ></button>
-                <h3 className="modal-header-text">検索の絞り込み</h3>
-                <button type="button" className="modal-clear">
+                >
                   すべてクリア
                 </button>
               </div>
-              <div className={!showCategory ? "modal-body show" : "modal-body"}>
+              <div
+                className={
+                  showSearchSetting && !showCategory
+                    ? "modal-body show"
+                    : "modal-body"
+                }
+              >
                 <ul className="modal-list">
                   <li className="modal-list-item">
                     <div className="modal-list-inner inner">
@@ -213,16 +346,34 @@ const Search = () => {
                       価格
                       <div className="modal-input-container">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="最低額"
                           className="modal-input"
+                          onChange={(e) => {
+                            if (e.target.value < 0) return;
+                            if (e.target.value === "") {
+                              setMinPrice(0);
+                            } else {
+                              setMinPrice(e.target.value);
+                            }
+                          }}
+                          value={minPrice === 0 ? "" : minPrice}
                         />
                         〜
                         <input
-                          type="text"
+                          type="number"
                           placeholder="最高額"
                           className="modal-input"
+                          onChange={(e) => {
+                            setMaxPrice(e.target.value);
+                          }}
+                          value={maxPrice === 0 ? "" : maxPrice}
                         />
+                        {checkPrice() === -2 && (
+                          <p className="modal-input-error">
+                            最高額を最低額より小さくしてください
+                          </p>
+                        )}
                       </div>
                     </div>
                   </li>
@@ -238,11 +389,27 @@ const Search = () => {
                   検索する
                 </button>
               </div>
-              <div className={showCategory ? "modal-body show" : "modal-body"}>
+              <div
+                className={
+                  showSearchSetting && showCategory
+                    ? "modal-body show"
+                    : "modal-body"
+                }
+              >
                 <ul className="modal-list">
                   <li className="modal-list-item">
                     <div className="modal-list-inner inner">
-                      <button type="button" className="modal-list-button">
+                      <button
+                        type="button"
+                        className={
+                          category === "all"
+                            ? "modal-list-button--selected"
+                            : "modal-list-button"
+                        }
+                        onClick={() => {
+                          setCategory("all");
+                        }}
+                      >
                         すべてのカテゴリ
                       </button>
                     </div>

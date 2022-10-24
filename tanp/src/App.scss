@@ -611,7 +611,7 @@ p {
 }
 
 .search {
-  margin: -8px 0 8px;
+  margin: -9px 0 9px;
   width: 100%;
   height: 66px;
   background-color: #fff;
@@ -703,6 +703,11 @@ p {
   background-size: contain;
 }
 
+.modal-back {
+  @extend .modal-close;
+  background-image: url("./img/icon_back.svg");
+}
+
 .modal-header-text {
   font-size: 1.5rem;
   font-weight: $medium;
@@ -743,6 +748,7 @@ p {
   text-align: left;
   display: block;
   width: 100%;
+  height: 100%;
   position: relative;
   &--next {
     @extend .modal-list-button;
@@ -751,6 +757,21 @@ p {
       width: 10px;
       height: 15px;
       background-image: url("./img/icon_next.svg");
+      background-size: contain;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  }
+  &--selected {
+    @extend .modal-list-button;
+    &::after {
+      content: "";
+      width: 18px;
+      height: 12px;
+      background-image: url("./img/icon_selected.svg");
+      background-size: contain;
       position: absolute;
       top: 50%;
       right: 0;
@@ -770,6 +791,7 @@ p {
   display: flex;
   justify-content: space-between;
   width: calc(240 / 357 * 100%);
+  position: relative;
 }
 
 .modal-input {
@@ -794,6 +816,19 @@ p {
   bottom: 22px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.category-icon {
+  width: 20px;
+  margin-right: 12px;
+}
+
+.modal-input-error {
+  font-size: 1.1rem;
+  color: red;
+  position: absolute;
+  bottom: -15px;
+  right: 0;
 }
 
 .show {
