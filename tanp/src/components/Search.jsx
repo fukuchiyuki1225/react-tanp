@@ -178,6 +178,12 @@ const Search = () => {
   const [showCategory, setShowCategory] = useState(false);
   const noItemsMsg = useRef("アイテムを検索しましょう。");
 
+  if (showSearchSetting) {
+    document.querySelector("body").style.overflow = "hidden";
+  } else {
+    document.querySelector("body").style.overflow = "auto";
+  }
+
   const search = (e, type) => {
     if (type === "key") {
       if (e.key !== "Enter" || keyword === "") return;
