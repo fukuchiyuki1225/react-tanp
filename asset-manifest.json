@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-tanp/static/css/main.56d18a80.css",
-    "main.js": "/react-tanp/static/js/main.5c17ce7b.js",
+    "main.js": "/react-tanp/static/js/main.305d6f15.js",
     "static/js/787.78ac1fc4.chunk.js": "/react-tanp/static/js/787.78ac1fc4.chunk.js",
     "static/media/icon_no-image.svg": "/react-tanp/static/media/icon_no-image.d0d83cc1cfede75bb38c6f7649189f2e.svg",
     "static/media/icon_catalog.svg": "/react-tanp/static/media/icon_catalog.06af3375d63e2b95f93322b2cff1d668.svg",
@@ -54,11 +54,11 @@
     "static/media/icon_selected.svg": "/react-tanp/static/media/icon_selected.069d69722008540eaaf8.svg",
     "static/media/icon_home-active.svg": "/react-tanp/static/media/icon_home-active.ca826749833552d7c023.svg",
     "main.56d18a80.css.map": "/react-tanp/static/css/main.56d18a80.css.map",
-    "main.5c17ce7b.js.map": "/react-tanp/static/js/main.5c17ce7b.js.map",
+    "main.305d6f15.js.map": "/react-tanp/static/js/main.305d6f15.js.map",
     "787.78ac1fc4.chunk.js.map": "/react-tanp/static/js/787.78ac1fc4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.56d18a80.css",
-    "static/js/main.5c17ce7b.js"
+    "static/js/main.305d6f15.js"
   ]
 }
