@@ -551,11 +551,25 @@ p {
 .item-name {
   font-size: 1.8rem;
   line-height: 2.6rem;
+  position: relative;
+  &::after {
+    content: "元ページへ";
+    display: block;
+    width: calc(70px + 15px);
+    font-size: 1.4rem;
+    font-weight: $medium;
+    background-image: url("./img/icon_link.svg");
+    background-size: 12px 12px;
+    background-position: right 0 bottom 50%;
+    position: absolute;
+    right: 0;
+    bottom: -25px;
+  }
 }
 
 .shop-name {
   display: block;
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 1.4rem;
   font-weight: $regular;
 }
