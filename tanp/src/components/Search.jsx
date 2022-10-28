@@ -199,9 +199,9 @@ const Search = () => {
   const search = (e, type) => {
     if (type === "key") {
       if (e.key !== "Enter") return;
-      if (checkKeyword() < 0) return;
     }
     if (checkPrice() < 0) return;
+    if (checkKeyword() < 0) return;
     let url = "";
     let categoryStr = category === "all" ? "" : `&genreId=${genreId[category]}`;
     let minPriceStr = minPrice > 0 ? `&minPrice=${minPrice}` : "";
