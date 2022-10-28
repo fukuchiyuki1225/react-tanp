@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import noImg from "../img/icon_no-image.svg";
 
 const Item = (props) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -50,14 +51,22 @@ const Item = (props) => {
         <div className="inner">
           <div className="item-img-container">
             <img
-              src={item.mediumImageUrls[0].imageUrl}
+              src={
+                item.mediumImageUrls.length === 0
+                  ? noImg
+                  : item.mediumImageUrls[0].imageUrl
+              }
               alt={item.itemName}
               className="item-img"
             />
           </div>
           <div className="item-img-container--dummy">
             <img
-              src={item.mediumImageUrls[0].imageUrl}
+              src={
+                item.mediumImageUrls.length === 0
+                  ? noImg
+                  : item.mediumImageUrls[0].imageUrl
+              }
               alt={item.itemName}
               className="item-img"
             />
