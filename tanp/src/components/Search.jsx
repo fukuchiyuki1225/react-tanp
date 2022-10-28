@@ -281,7 +281,9 @@ const Search = () => {
   };
 
   const checkKeyword = () => {
-    if (keyword.length <= 2) {
+    if (keyword.length === 0) {
+      return 0;
+    } else if (keyword.length <= 2) {
       noItemsMsg.current = "検索キーワードは3文字以上入力してください。";
       return -1;
     } else if (keyword.length >= 120) {
