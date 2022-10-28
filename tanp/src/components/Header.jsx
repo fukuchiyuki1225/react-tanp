@@ -8,7 +8,7 @@ const Header = () => {
         useLocation().pathname === "/search" ? "header--search" : "header"
       }
     >
-      <Link to="react-tanp">Sanrio goods search</Link>
+      <Link to={`${process.env.PUBLIC_URL}/`}>Sanrio goods search</Link>
     </h1>
   );
 };
