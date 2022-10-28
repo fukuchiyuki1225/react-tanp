@@ -183,6 +183,7 @@ const Search = () => {
       if (e.key !== "Enter" || keyword === "") return;
     }
     if (checkPrice() < 0) return;
+    if (checkKeyword() < 0) return;
     let url = "";
     let categoryStr = category === "all" ? "" : `&genreId=${genreId[category]}`;
     let minPriceStr = minPrice > 0 ? `&minPrice=${minPrice}` : "";
@@ -242,18 +243,32 @@ const Search = () => {
   };
 
   const checkPrice = () => {
-    noItemsMsg.current = "検索条件を修正してください。";
     if (minPrice === 0 && maxPrice === 0) {
       noItemsMsg.current = "アイテムを検索しましょう。";
       return 0;
     } else if (minPrice < 0 || maxPrice < 0) {
+      noItemsMsg.current = "検索条件を修正してください。";
       return -1;
     } else if (maxPrice <= minPrice && minPrice >= 0 && maxPrice >= 0) {
-      if (maxPrice === 0) return 0;
+      if (maxPrice === 0) {
+        noItemsMsg.current = "アイテムを検索しましょう。";
+        return 0;
+      }
+      noItemsMsg.current = "検索条件を修正してください。";
       return -2;
     }
     noItemsMsg.current = "アイテムを検索しましょう。";
     return 0;
+  };
+
+  const checkKeyword = () => {
+    if (keyword.length <= 2) {
+      noItemsMsg.current = "検索キーワードは3文字以上入力してください。";
+      return -1;
+    } else {
+      noItemsMsg.current = "アイテムを検索しましょう。";
+      return 0;
+    }
   };
 
   if (!isItemPage) {
@@ -268,7 +283,10 @@ const Search = () => {
                 className="search-input"
                 placeholder="アイテムを探す。"
                 onKeyPress={(e) => search(e, "key")}
-                onChange={(e) => setKeyWord(e.target.value)}
+                onChange={(e) => {
+                  checkKeyword();
+                  setKeyWord(e.target.value);
+                }}
                 value={keyword}
               />
             </div>
