@@ -531,16 +531,18 @@ const Search = () => {
                     </div>
                   </li>
                 </ul>
-                <button
-                  type="button"
-                  className="modal-search-button"
-                  onClick={() => {
-                    closeSearchSetting();
-                    search("click");
-                  }}
-                >
-                  検索する
-                </button>
+                <div className="modal-search-button-container">
+                  <button
+                    type="button"
+                    className="modal-search-button"
+                    onClick={() => {
+                      closeSearchSetting();
+                      search("click");
+                    }}
+                  >
+                    検索する
+                  </button>
+                </div>
               </div>
               <div
                 className={
