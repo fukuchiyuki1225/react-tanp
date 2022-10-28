@@ -36,7 +36,7 @@ import renovationImg from "../img/icon_renovation.svg";
 import catalogImg from "../img/icon_catalog.svg";
 
 const frontUrl =
-  "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706?format=json&keyword=%E3%82%B5%E3%83%B3%E3%83%AA%E3%82%AA";
+  "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706?format=json&keyword=%E3%82%B5%E3%83%B3%E3%83%AA%E3%82%AA%20";
 const endUrl = "&applicationId=1095590964104393112";
 
 const genreName = {
@@ -165,6 +165,16 @@ const genreImg = {
   // gift: giftImg,
 };
 
+const sortName = {
+  standard: "人気順（デフォルト）",
+  "-reviewAverage": "評価が高い順",
+  "+reviewAverage": "評価が低い順",
+  "-itemPrice": "価格が高い順",
+  "+itemPrice": "価格が低い順",
+  "-updateTimestamp": "新着順",
+  "+updateTimestamp": "追加順",
+};
+
 const Search = () => {
   const [searchItems, setSearchItems] = useState([]);
   const [isItemPage, setIsItemPage] = useState(false);
@@ -174,8 +184,10 @@ const Search = () => {
   const [category, setCategory] = useState("all");
   const [maxPrice, setMaxPrice] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
+  const sort = useRef("standard");
   const [showSearchSetting, setShowSearchSetting] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
+  const [showPulldown, setShowPulldown] = useState(false);
   const noItemsMsg = useRef("アイテムを検索しましょう。");
 
   if (showSearchSetting) {
@@ -186,17 +198,18 @@ const Search = () => {
 
   const search = (e, type) => {
     if (type === "key") {
-      if (e.key !== "Enter" || keyword === "") return;
+      if (e.key !== "Enter") return;
+      if (checkKeyword() < 0) return;
     }
     if (checkPrice() < 0) return;
-    if (checkKeyword() < 0) return;
     let url = "";
     let categoryStr = category === "all" ? "" : `&genreId=${genreId[category]}`;
     let minPriceStr = minPrice > 0 ? `&minPrice=${minPrice}` : "";
     let maxPriceStr = maxPrice > 0 ? `&maxPrice=${maxPrice}` : "";
-    url = `${frontUrl}"%20"${encodeURIComponent(
+    let sortStr = `&sort=${encodeURIComponent(sort.current)}`;
+    url = `${frontUrl}${encodeURIComponent(
       keyword
-    )}${categoryStr}${minPriceStr}${maxPriceStr}${endUrl}`;
+    )}${categoryStr}${minPriceStr}${maxPriceStr}${sortStr}${endUrl}`;
     fetch(url)
       .then((res) => res.json())
       .then((jsonRes) => {
@@ -307,6 +320,97 @@ const Search = () => {
               }}
             ></button>
           </div>
+          {searchItems.length !== 0 && (
+            <div className="sort">
+              <div className="inner">
+                <dl className="sort-text">
+                  <dt>ソート</dt>
+                  <div className="sort-select">
+                    <dd
+                      className="sort-current"
+                      onClick={() => {
+                        setShowPulldown(!showPulldown);
+                      }}
+                    >
+                      {sortName[sort.current]}
+                    </dd>
+                    <ul className={showPulldown ? "pulldown show" : "pulldown"}>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "standard";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        人気順（デフォルト）
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "-reviewAverage";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        評価が高い順
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "+reviewAverage";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        評価が低い順
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "-itemPrice";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        価格が高い順
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "+itemPrice";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        価格が低い順
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "-updateTimestamp";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        新着順
+                      </li>
+                      <li
+                        className="pulldown-item"
+                        onClick={() => {
+                          sort.current = "+updateTimestamp";
+                          setShowPulldown(false);
+                          search("sort");
+                        }}
+                      >
+                        追加順
+                      </li>
+                    </ul>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          )}
           <div className="list-container">
             <div className="inner">
               <div className="list-heading-container">

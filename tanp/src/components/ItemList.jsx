@@ -28,7 +28,13 @@ const ItemList = (props) => {
                   alt={item.Item.itemName}
                 />
               </div>
-              <h3 className="list-item-text">{item.Item.itemName}</h3>
+              <div className="list-item-text-container">
+                <h3 className="list-item-text">{item.Item.itemName}</h3>
+                <h4 className="list-item-price">
+                  ¥{item.Item.itemPrice.toLocaleString()}
+                  <span> (税込)</span>
+                </h4>
+              </div>
             </button>
           </li>
         );
