@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ItemList from "./ItemList";
 import Item from "./Item";
 import ladiesImg from "../img/icon_ladies.svg";
@@ -176,7 +176,7 @@ const Search = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [showSearchSetting, setShowSearchSetting] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
-  const [noItems, setNoItems] = useState(false);
+  const noItemsMsg = useRef("アイテムを検索しましょう。");
 
   const search = (e, type) => {
     if (type === "key") {
@@ -195,9 +195,9 @@ const Search = () => {
       .then((jsonRes) => {
         setSearchItems(jsonRes.Items);
         if (searchItems.length === 0) {
-          setNoItems(true);
+          noItemsMsg.current = "アイテムが見つかりませんでした。";
         } else {
-          setNoItems(false);
+          noItemsMsg.current = "アイテムを検索しましょう。";
         }
       });
   };
@@ -238,10 +238,13 @@ const Search = () => {
     setCategory("all");
     setMinPrice(0);
     setMaxPrice(0);
+    noItemsMsg.current = "アイテムを検索しましょう。";
   };
 
   const checkPrice = () => {
+    noItemsMsg.current = "検索条件を修正してください。";
     if (minPrice === 0 && maxPrice === 0) {
+      noItemsMsg.current = "アイテムを検索しましょう。";
       return 0;
     } else if (minPrice < 0 || maxPrice < 0) {
       return -1;
@@ -249,6 +252,7 @@ const Search = () => {
       if (maxPrice === 0) return 0;
       return -2;
     }
+    noItemsMsg.current = "アイテムを検索しましょう。";
     return 0;
   };
 
@@ -281,13 +285,7 @@ const Search = () => {
               <div className="list-heading-container">
                 <h2 className="list-heading">検索結果</h2>
               </div>
-              {noItems ? (
-                <p className="message-no-item">
-                  アイテムが見つかりませんでした。
-                  <br />
-                  検索条件を変えてお試しください。
-                </p>
-              ) : searchItems.length !== 0 ? (
+              {searchItems.length !== 0 ? (
                 <ItemList
                   setIsItemPage={setIsItemPage}
                   setItemInfo={setItemInfo}
@@ -296,11 +294,7 @@ const Search = () => {
                   key="Search"
                 ></ItemList>
               ) : (
-                <p className="message-no-item">
-                  {checkPrice() === 0
-                    ? `アイテムを検索しましょう。`
-                    : `検索条件を確認してください。`}
-                </p>
+                <p className="message-no-item">{noItemsMsg.current}</p>
               )}
             </div>
           </div>
