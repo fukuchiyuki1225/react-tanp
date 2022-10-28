@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
-  console.log();
   return (
     <h1
       className={
