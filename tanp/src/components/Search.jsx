@@ -233,9 +233,14 @@ const Search = () => {
   };
 
   const checkPrice = () => {
-    if (minPrice < 0 || maxPrice < 0) {
+    console.log("min: " + minPrice);
+    console.log("max: " + maxPrice);
+    if (minPrice === 0 && maxPrice === 0) {
+      return 0;
+    } else if (minPrice < 0 || maxPrice < 0) {
       return -1;
-    } else if (maxPrice <= minPrice && minPrice > 0 && maxPrice > 0) {
+    } else if (maxPrice <= minPrice && minPrice >= 0 && maxPrice >= 0) {
+      if (maxPrice === 0) return 0;
       return -2;
     }
     return 0;
@@ -354,7 +359,7 @@ const Search = () => {
                             if (e.target.value === "") {
                               setMinPrice(0);
                             } else {
-                              setMinPrice(e.target.value);
+                              setMinPrice(Number(e.target.value));
                             }
                           }}
                           value={minPrice === 0 ? "" : minPrice}
@@ -365,10 +370,15 @@ const Search = () => {
                           placeholder="最高額"
                           className="modal-input"
                           onChange={(e) => {
-                            setMaxPrice(e.target.value);
+                            setMaxPrice(Number(e.target.value));
                           }}
                           value={maxPrice === 0 ? "" : maxPrice}
                         />
+                        {checkPrice() === -1 && (
+                          <p className="modal-input-error">
+                            0より大きい金額を入力してください
+                          </p>
+                        )}
                         {checkPrice() === -2 && (
                           <p className="modal-input-error">
                             最高額を最低額より小さくしてください
