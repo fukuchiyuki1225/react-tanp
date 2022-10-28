@@ -204,6 +204,7 @@ select,
 textarea {
   background-color: transparent;
   border-style: none;
+  color: #2c2c2c;
 }
 
 a:focus,
@@ -424,6 +425,7 @@ p {
 .list-item-price {
   margin-top: 5px;
   font-size: 1.3rem;
+  color: #007aff;
   span {
     font-size: 1rem;
     font-weight: $regular;
