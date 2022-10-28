@@ -238,6 +238,7 @@ const Search = () => {
               }
               onClick={() => {
                 setCategory(key);
+                setShowCategory(false);
               }}
             >
               {genreName[key]}
@@ -483,6 +484,9 @@ const Search = () => {
                       >
                         カテゴリ
                       </button>
+                      <p className="current-category">
+                        {category !== "all" && `${genreName[category]}`}
+                      </p>
                     </div>
                   </li>
                   <li className="modal-list-item">

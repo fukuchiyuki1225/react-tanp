@@ -801,6 +801,15 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  position: relative;
+}
+
+.current-category {
+  color: #b4b4b4;
+  position: absolute;
+  top: 49%;
+  right: 20px;
+  transform: translateY(-50%);
 }
 
 .modal-input-container {
