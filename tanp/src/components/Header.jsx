@@ -9,7 +9,7 @@ const Header = () => {
         useLocation().pathname === "/search" ? "header--search" : "header"
       }
     >
-      <Link to="/">Sanrio goods search</Link>
+      <Link to="react-tanp">Sanrio goods search</Link>
     </h1>
   );
 };

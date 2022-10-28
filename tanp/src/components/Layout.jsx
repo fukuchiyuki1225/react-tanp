@@ -10,7 +10,7 @@ const Layout = (props) => {
       <nav>
         <ul className="menu">
           <NavLink
-            to="/"
+            to={`${process.env.PUBLIC_URL}/`}
             className={({ isActive }) =>
               isActive ? "menu-button--home menu-active" : "menu-button--home"
             }
@@ -19,7 +19,7 @@ const Layout = (props) => {
             ホーム
           </NavLink>
           <NavLink
-            to="favorite"
+            to={`${process.env.PUBLIC_URL}/favorite`}
             className={({ isActive }) =>
               isActive
                 ? "menu-button--favorite menu-active"
@@ -29,7 +29,7 @@ const Layout = (props) => {
             お気に入り
           </NavLink>
           <NavLink
-            to="search"
+            to={`${process.env.PUBLIC_URL}/search`}
             className={({ isActive }) =>
               isActive
                 ? "menu-button--search menu-active"

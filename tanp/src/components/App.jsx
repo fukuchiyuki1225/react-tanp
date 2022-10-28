@@ -7,6 +7,7 @@ import Search from "./Search";
 import Layout from "./Layout";
 
 const App = () => {
+  console.log(`${process.env.PUBLIC_URL}/`);
   return (
     <BrowserRouter>
       <Routes>
