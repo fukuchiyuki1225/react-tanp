@@ -10,10 +10,19 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout></Layout>}>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/favorite" element={<Favorite></Favorite>}></Route>
-          <Route path="/search" element={<Search></Search>}></Route>
+        <Route path={`${process.env.PUBLIC_URL}/`} element={<Layout></Layout>}>
+          <Route
+            path={`${process.env.PUBLIC_URL}/`}
+            element={<Home></Home>}
+          ></Route>
+          <Route
+            path={`${process.env.PUBLIC_URL}/favorite`}
+            element={<Favorite></Favorite>}
+          ></Route>
+          <Route
+            path={`${process.env.PUBLIC_URL}/search`}
+            element={<Search></Search>}
+          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>
