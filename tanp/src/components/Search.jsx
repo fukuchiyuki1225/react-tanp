@@ -176,6 +176,7 @@ const Search = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [showSearchSetting, setShowSearchSetting] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
+  const [noItems, setNoItems] = useState(false);
 
   const search = (e, type) => {
     if (type === "key") {
@@ -184,13 +185,20 @@ const Search = () => {
     if (checkPrice() < 0) return;
     let url = "";
     let categoryStr = category === "all" ? "" : `&genreId=${genreId[category]}`;
+    let minPriceStr = minPrice > 0 ? `&minPrice=${minPrice}` : "";
+    let maxPriceStr = maxPrice > 0 ? `&maxPrice=${maxPrice}` : "";
     url = `${frontUrl}"%20"${encodeURIComponent(
       keyword
-    )}${categoryStr}${endUrl}`;
+    )}${categoryStr}${minPriceStr}${maxPriceStr}${endUrl}`;
     fetch(url)
       .then((res) => res.json())
       .then((jsonRes) => {
         setSearchItems(jsonRes.Items);
+        if (searchItems.length === 0) {
+          setNoItems(true);
+        } else {
+          setNoItems(false);
+        }
       });
   };
 
@@ -233,8 +241,6 @@ const Search = () => {
   };
 
   const checkPrice = () => {
-    console.log("min: " + minPrice);
-    console.log("max: " + maxPrice);
     if (minPrice === 0 && maxPrice === 0) {
       return 0;
     } else if (minPrice < 0 || maxPrice < 0) {
@@ -275,7 +281,13 @@ const Search = () => {
               <div className="list-heading-container">
                 <h2 className="list-heading">検索結果</h2>
               </div>
-              {searchItems.length !== 0 ? (
+              {noItems ? (
+                <p className="message-no-item">
+                  アイテムが見つかりませんでした。
+                  <br />
+                  検索条件を変えてお試しください。
+                </p>
+              ) : searchItems.length !== 0 ? (
                 <ItemList
                   setIsItemPage={setIsItemPage}
                   setItemInfo={setItemInfo}
@@ -287,7 +299,7 @@ const Search = () => {
                 <p className="message-no-item">
                   {checkPrice() === 0
                     ? `アイテムを検索しましょう。`
-                    : `絞り込み条件を確認してください。`}
+                    : `検索条件を確認してください。`}
                 </p>
               )}
             </div>
