@@ -213,12 +213,12 @@ const Search = () => {
     fetch(url)
       .then((res) => res.json())
       .then((jsonRes) => {
-        setSearchItems(jsonRes.Items);
-        if (searchItems.length === 0) {
+        if (jsonRes.Items.length === 0) {
           noItemsMsg.current = "アイテムが見つかりませんでした。";
         } else {
           noItemsMsg.current = "アイテムを検索しましょう。";
         }
+        setSearchItems(jsonRes.Items);
       });
   };
 
