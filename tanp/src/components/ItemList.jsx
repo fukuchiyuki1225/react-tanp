@@ -1,4 +1,5 @@
 import React from "react";
+import noImg from "../img/icon_no-image.svg";
 
 const ItemList = (props) => {
   return (
@@ -19,7 +20,11 @@ const ItemList = (props) => {
               <div className="list-item-img-container">
                 <img
                   className="list-item-img"
-                  src={item.Item.mediumImageUrls[0].imageUrl}
+                  src={
+                    item.Item.mediumImageUrls.length === 0
+                      ? noImg
+                      : item.Item.mediumImageUrls[0].imageUrl
+                  }
                   alt={item.Item.itemName}
                 />
               </div>
