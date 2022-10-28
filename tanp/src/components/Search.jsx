@@ -265,6 +265,9 @@ const Search = () => {
     if (keyword.length <= 2) {
       noItemsMsg.current = "検索キーワードは3文字以上入力してください。";
       return -1;
+    } else if (keyword.length >= 120) {
+      noItemsMsg.current = "検索キーワードは120文字以内にしてください。";
+      return -2;
     } else {
       noItemsMsg.current = "アイテムを検索しましょう。";
       return 0;
